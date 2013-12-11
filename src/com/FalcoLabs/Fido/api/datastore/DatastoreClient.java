@@ -33,6 +33,7 @@ import com.FalcoLabs.Fido.api.datastore.exceptions.DatastoreServiceException;
 import com.FalcoLabs.Fido.api.datastore.serializers.BinarySerializer;
 import com.datastax.driver.core.*;
 
+// Methods to get and set data from the Cassandra store
 public class DatastoreClient {
 	private static String LOG_TAG = DatastoreClient.class.getName();
 	private Connection connection;
@@ -48,6 +49,13 @@ public class DatastoreClient {
 		return this.getConnection().getSession();
 	}	
 	
+	/**
+	 * Query the store for matching data
+	 *
+	 * @param cql the cql {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html}
+	 * @param values the values
+	 * @return the result set containing the results of the query
+	 */
 	public ResultSet query(String cql, Object ... values) {
 		Log.v(LOG_TAG, " Query: " + cql);
 		List<Object> cqlSafeValues = this.getCqlSafeValues(values);
@@ -67,6 +75,11 @@ public class DatastoreClient {
 		}		
 	}
 
+	/**
+	 * Delete.  Delete any items that match the query
+	 *
+	 * @param query the query {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html}
+	 */
 	public void delete(Query query) {
 		query.prepare();
 		String selectTarget = SchemaMapper.kindToColumnFamily(query.getKind());
@@ -80,6 +93,12 @@ public class DatastoreClient {
 		this.query(b.toString(), query.getValues().toArray());		
 	}
 	
+	/**
+	 * Select.  Return any items that match the query
+	 *
+	 * @param query the query {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html}
+	 * @return the list
+	 */
 	public List<DataStoreRow> select(Query query) {
 		query.prepare();
 		Schema.ensure(query);		
@@ -102,6 +121,13 @@ public class DatastoreClient {
 		return rows;
 	}	
 
+	/**
+	 * Select.
+	 *
+	 * @param columns the columns to return
+	 * @param query the query {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html}
+	 * @return the list
+	 */
 	public List<DataStoreRow> select(List<DataStoreColumn> columns, Query query) {
 		query.prepare();
 		Schema.ensure(query);		
@@ -134,6 +160,11 @@ public class DatastoreClient {
 		return rows;
 	}	
 	
+	/**
+	 * Insert.  Add a new row to the datastore
+	 *
+	 * @param row the row
+	 */
 	public void insert(DataStoreRow row) {
 		Schema.ensure(row);
 		String insertTarget = SchemaMapper.kindToColumnFamily(row.getKind());
@@ -168,6 +199,11 @@ public class DatastoreClient {
 		this.query(query.toString(), values.toArray());			
 	}
 
+	/**
+	 * Delete.  Delete the item with the matching key.
+	 *
+	 * @param k the key to delete
+	 */
 	public void delete(Key k) {
 		String target = SchemaMapper.kindToColumnFamily(k.getKind());
 		StringBuilder query = new StringBuilder();
@@ -179,6 +215,11 @@ public class DatastoreClient {
 		this.query(query.toString(), k.toString());
 	}
 
+	/**
+	 * Delete.  Delete the items with the matching keys.
+	 *
+	 * @param keys the keys
+	 */
 	public void delete(List<Key> keys) {
 		for (Key k : keys) {
 			this.delete(k);

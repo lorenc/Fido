@@ -28,18 +28,27 @@ import com.FalcoLabs.FalcoWeb.Logging.Log;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 
-public abstract class SchemaMapper {
+// Maps between Fido objects and the Cassandra schema
+abstract class SchemaMapper {
 	private static String LOG_TAG = SchemaMapper.class.getName();
 	private static Map<String, String> kindToColumnFamily = new HashMap<String, String>();
 	private static Map<String, String> columnFamilyToKind = new HashMap<String, String>();
 	protected static String SchemaColumnFamilySuffix = "_schema";
 
+	/**
+	 * Reset.
+	 */
 	public static void reset() {
 		SchemaMapper.kindToColumnFamily = new HashMap<String, String>();
 		SchemaMapper.columnFamilyToKind = new HashMap<String, String>();
-		DatastoreClient client = new DatastoreClient();
-	}
+}
 	
+	/**
+	 * Column family to kind.
+	 *
+	 * @param columnFamily the column family
+	 * @return the string
+	 */
 	public static String columnFamilyToKind(String columnFamily) {
 		if (SchemaMapper.columnFamilyToKind.containsKey(columnFamily)) {
 			return SchemaMapper.columnFamilyToKind.get(columnFamily);
@@ -66,6 +75,12 @@ public abstract class SchemaMapper {
 		return null;
 	}
 
+	/**
+	 * Kind to column family.
+	 *
+	 * @param kind the kind
+	 * @return the string
+	 */
 	public static String kindToColumnFamily(String kind) {
 		if (SchemaMapper.kindToColumnFamily.containsKey(kind)) {
 			return SchemaMapper.kindToColumnFamily.get(kind);
@@ -79,6 +94,12 @@ public abstract class SchemaMapper {
 		return columnFamily;
 	}
 
+	/**
+	 * Hash kind to column family.
+	 *
+	 * @param kind the kind
+	 * @return the string
+	 */
 	protected static String hashKindToColumnFamily(String kind) {
 		int hash = kind.hashCode();
 		if (hash < 0) {

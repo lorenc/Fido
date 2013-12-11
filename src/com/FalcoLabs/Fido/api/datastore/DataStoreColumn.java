@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Represents a column on an item in the datastore
 public abstract class DataStoreColumn {	
 	private static String ComplexColumnPrefix = "[]";
 	protected static Map<String, Class<?>> classStringMap = new HashMap<String, Class<?>>();
@@ -32,6 +33,12 @@ public abstract class DataStoreColumn {
 	protected Class<?> type = null;
 	protected Object value;
 	
+	/**
+	 * Creates a new column with the specified name
+	 *
+	 * @param name the name
+	 * @return the data store column
+	 */
 	public static DataStoreColumn create(String name) {
 		if (DataStoreColumn.getIsComplexName(name)) {
 			return new ComplexSelectColumn(name);
@@ -40,14 +47,36 @@ public abstract class DataStoreColumn {
 		}	
 	}
 	
+	/**
+	 * Creates a new column with the specified name and type
+	 *
+	 * @param name the name
+	 * @param type the type
+	 * @return the data store column
+	 */
 	public static DataStoreColumn create(String name, Class<?> type) {
 		return new SimpleColumn(name, type);
 	}
 	
+	/**
+	 * Creates a new column with the specified name and value
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the data store column
+	 */
 	public static DataStoreColumn create(String name, Object value) {
 		return DataStoreColumn.create(null,  name, value);
 	}
 	
+	/**
+	 * Creates a new column using the data from the row
+	 *
+	 * @param row the row
+	 * @param name the name
+	 * @param value the value
+	 * @return the data store column
+	 */
 	public static DataStoreColumn create(DataStoreRow row, String name, Object value) {
 		if (null != row && DataStoreColumn.getIsComplexType(value) && !DataStoreColumn.getIsComplexName(name)) {
 			return new ComplexInsertColumn(row, name, (List<?>)value);
@@ -58,10 +87,22 @@ public abstract class DataStoreColumn {
 		}
 	}
 		
+	/**
+	 * Gets the checks if is complex name.  A complex name means that the column contains multivalued data
+	 *
+	 * @param name the name
+	 * @return the checks if is complex name
+	 */
 	protected static boolean getIsComplexName(String name) {
 		return name.startsWith(DataStoreColumn.ComplexColumnPrefix);
 	}
 	
+	/**
+	 * Gets the checks if is complex type.  A complex type means that the column contains multivalued data
+	 *
+	 * @param value the value
+	 * @return the checks if is complex type
+	 */
 	protected static boolean getIsComplexType(Object value) {
 		if (null == value) {
 			return false;
@@ -73,26 +114,58 @@ public abstract class DataStoreColumn {
         }
 	}
 	
+	/**
+	 * Gets the value.
+	 *
+	 * @return the value
+	 */
 	public Object getValue() {
 		return this.value;
 	}
 				
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	public String getName() {
 		return this.name;
 	}
 	
+	/**
+	 * Gets the type.
+	 *
+	 * @return the type
+	 */
 	public Class<?> getType() {
 		return this.type;
 	}
 
+	/**
+	 * Sets the value.
+	 *
+	 * @param value the new value
+	 */
 	public void setValue(Object value) {
 		this.value = value;
 	}
 	
+	/**
+	 * Gets the encoded name.  The encoded name is the same as the column name for normal properties.  For multivalued properties the encoded name contains the property name and the sub table that holds the multiple values.
+	 *
+	 * @return the encoded name
+	 */
 	public String getEncodedName() {
 		return DataStoreColumn.getEncodedName(this.getName(), this.getType());
 	}	
 	
+	/**
+	 * Gets the encoded name.
+	 *
+	 * @param name the name
+	 * @param type the type
+	 * @return the encoded name
+	 */
 	protected static String getEncodedName(String name, Class<?> type) {
 		switch (name) {
 		case DataStore.ENTITY_PROPERTY_KEY:
@@ -111,6 +184,12 @@ public abstract class DataStoreColumn {
 		}		
 	}
 	
+	/**
+	 * Decoded name.
+	 *
+	 * @param name the name
+	 * @return the string
+	 */
 	protected static String decodedName(String name) {
 		int i = name.indexOf("__");
 		if (i > 0) {
@@ -119,14 +198,32 @@ public abstract class DataStoreColumn {
 		return name;		
 	}
 	
-	public static String getSimpleNameFromComplexName(String name) {
+	/**
+	 * Gets the simple name from complex name.
+	 *
+	 * @param name the name
+	 * @return the simple name from complex name
+	 */
+	protected static String getSimpleNameFromComplexName(String name) {
 		return name.substring(DataStoreColumn.ComplexColumnPrefix.length());
 	}
 
-	public static String getComplexNameFromSimpleName(String name) {
+	/**
+	 * Gets the complex name from simple name.
+	 *
+	 * @param name the name
+	 * @return the complex name from simple name
+	 */
+	protected static String getComplexNameFromSimpleName(String name) {
 		return (DataStoreColumn.ComplexColumnPrefix + name);
 	}
 	
+	/**
+	 * Gets the checks if is string serializable type.
+	 *
+	 * @param type the type
+	 * @return the checks if is string serializable type
+	 */
 	protected static boolean getIsStringSerializableType(Class<?> type) {
 		if (type == Key.class) {
 			return true;

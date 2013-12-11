@@ -21,6 +21,7 @@
 
 package com.FalcoLabs.Fido.api.datastore;
 
+// Options for how queries should be executed against the datastore.
 public class FetchOptions {
 
 	private int limit = Integer.MAX_VALUE;
@@ -28,31 +29,64 @@ public class FetchOptions {
 	
 	public static final class Builder {
 
+		/**
+		 * With offset.  The offset in the resultset to start returning results from.
+		 *
+		 * @param offset the offset
+		 * @return the fetch options
+		 */
 		public static FetchOptions withOffset(int offset) {
 			return new FetchOptions().offset(offset);
 		}
 
+		/**
+		 * With defaults.
+		 *
+		 * @return the fetch options
+		 */
 		public static FetchOptions withDefaults() {
 			return new FetchOptions();
 		}
 		
 	}
 	
+	/**
+	 * Create a new instance with the specified offset.
+	 *
+	 * @param value the value
+	 * @return the fetch options
+	 */
 	public FetchOptions offset(int value) {
 		this.offset = value;
 		return this;
 	}
 
+	/**
+	 * Limit for the number of values to return from a query.
+	 *
+	 * @param value the value
+	 * @return the fetch options
+	 */
 	public FetchOptions limit(int value)
 	{
 		this.limit = value;
 		return this;
 	}
 	
+	/**
+	 * Gets the limit.
+	 *
+	 * @return the limit
+	 */
 	public int getLimit() {
 		return this.limit;
 	}
 	
+	/**
+	 * Gets the offset.
+	 *
+	 * @return the offset
+	 */
 	public int getOffset() {
 		return this.offset;
 	}

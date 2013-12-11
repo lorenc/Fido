@@ -24,8 +24,14 @@ package com.FalcoLabs.Fido.api.datastore;
 import com.FalcoLabs.Fido.api.datastore.exceptions.DatastoreServiceException;
 import com.FalcoLabs.Fido.api.localization.messages;
 
+// Factory used to get DataStoreService instances
 public class DatastoreServiceFactory {
 	
+	/**
+	 * Gets the datastore service.
+	 *
+	 * @return the datastore service
+	 */
 	public static DatastoreService getDatastoreService() {		
 		if (null == DataStore.KEYSPACE_NAME) {
 			throw new DatastoreServiceException(messages.MUST_CALL_SETKEYSPACE_ERROR); 
@@ -33,6 +39,11 @@ public class DatastoreServiceFactory {
 		return new DatastoreService(new DatastoreClient());
 	}
 	
+	/**
+	 * Gets a new connection instance.
+	 *
+	 * @return the connection
+	 */
 	public static Connection getConnection() {
 		return new Connection();
 	}

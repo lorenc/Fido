@@ -21,22 +21,50 @@
 
 package com.FalcoLabs.Fido.api.datastore;
 
+// Factory to create Key instances.
 public class KeyFactory {
 
+	/**
+	 * Creates a new Key object.
+	 *
+	 * @param key the key
+	 * @param kind the kind
+	 * @param name the name
+	 * @return the key
+	 */
 	public static Key createKey(Key key, String kind, String name) {
 		Key k = new Key(key, kind, name);
 		return k;
 	}
 
+	/**
+	 * Creates a new Key object.
+	 *
+	 * @param kind the kind
+	 * @param name the name
+	 * @return the key
+	 */
 	public static Key createKey(String kind, String name) {
 		return new Key(kind, name);
 	}
 
+	/**
+	 * String to key.
+	 *
+	 * @param keyString the key string
+	 * @return the key
+	 */
 	public static Key stringToKey(String keyString) {
 		Key key = Key.parse(keyString);
 		return key;
 	}
 
+	/**
+	 * Key to string.
+	 *
+	 * @param key the key
+	 * @return the string
+	 */
 	public static String keyToString(Key key) {
 		return key.toString();
 	}

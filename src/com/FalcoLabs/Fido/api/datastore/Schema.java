@@ -32,16 +32,23 @@ import com.FalcoLabs.Fido.api.datastore.Query.FilterPredicate;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 
-public abstract class Schema {	
+// Manages creating and updating the Cassandra schema
+abstract class Schema {	
 	private static String LOG_TAG = Schema.class.getName();
 	private static Map<String, Map<String, String>> schemaMap = new HashMap<String, Map<String, String>>();
 	private static boolean schemaLoaded = false;
 	
+	/**
+	 * Reset the tracked schema state
+	 */
 	public static void reset() {
 		Schema.schemaLoaded = false;
 		Schema.schemaMap = new HashMap<String, Map<String, String>>();
 	}
 	
+	/**
+	 * Reload the schema state from the schema mapping column family.
+	 */
 	public static void reloadSchema() {
 		Schema.schemaLoaded = false;
 		Schema.getSchemaItems();
@@ -64,6 +71,13 @@ public abstract class Schema {
 		}
 	}
 	
+	/**
+	 * Adds the schema item.
+	 *
+	 * @param table the table
+	 * @param column the column
+	 * @param index the index
+	 */
 	protected synchronized static void addSchemaItem(String table, String column, String index) {
 		if (null != table) {
 			if (!Schema.schemaMap.containsKey(table)) {
@@ -75,6 +89,14 @@ public abstract class Schema {
 		}		
 	}
 	
+	/**
+	 * Have schema item.
+	 *
+	 * @param table the table
+	 * @param column the column
+	 * @param index the index
+	 * @return true, if successful
+	 */
 	public static boolean haveSchemaItem(String table, String column, String index) {
 		Schema.getSchemaItems();
 		if (!Schema.schemaMap.containsKey(table)) {
@@ -92,6 +114,11 @@ public abstract class Schema {
 		return Schema.schemaMap.get(table).get(column) != null;
 	}
 	
+	/**
+	 * Drop keyspace.
+	 *
+	 * @param keyspace the keyspace
+	 */
 	public static void dropKeyspace(String keyspace) {
 		try {
 			DatastoreClient client = new DatastoreClient();
@@ -103,6 +130,11 @@ public abstract class Schema {
 		}
 	}	
 	
+	/**
+	 * Ensure keyspace.
+	 *
+	 * @param keyspace the keyspace
+	 */
 	public static void ensureKeyspace(String keyspace) {
 		try {
 			DatastoreClient client = new DatastoreClient();
@@ -116,6 +148,12 @@ public abstract class Schema {
 		Schema.ensureTable(name, "parent varchar, key varchar, PRIMARY KEY(key, parent)");
 	}
 		
+	/**
+	 * Ensure table.
+	 *
+	 * @param table the table
+	 * @param columns the columns
+	 */
 	public static void ensureTable(String table, List<DataStoreColumn> columns) {
 		if (Schema.haveSchemaItem(table, null, null)) {
 			return;
@@ -165,6 +203,12 @@ public abstract class Schema {
 		Schema.addSchemaItem(table, null, null);
 	}
 	
+	/**
+	 * Ensure column.
+	 *
+	 * @param table the table
+	 * @param column the column
+	 */
 	public static void ensureColumn(String table, DataStoreColumn column) {
 		if (Schema.haveSchemaItem(table, column.getEncodedName(), null)) {
 			return;
@@ -194,6 +238,12 @@ public abstract class Schema {
 		Schema.addSchemaItem(table, column.getEncodedName(), null);
 	}
 
+	/**
+	 * Column type from class type.
+	 *
+	 * @param columnClass the column class
+	 * @return the object
+	 */
 	public static Object columnTypeFromClassType(Class<?> columnClass) {
 		if (columnClass == Integer.class) {
 			return "int";
@@ -220,6 +270,12 @@ public abstract class Schema {
 		}			
 	}
 
+	/**
+	 * Ensure index.
+	 *
+	 * @param table the table
+	 * @param column the column
+	 */
 	public static void ensureIndex(String table, DataStoreColumn column) {
 		if (Schema.haveSchemaItem(table, column.getEncodedName(), column.getType().getName()) || column.getName().equals("key")) {
 			return;
@@ -244,12 +300,23 @@ public abstract class Schema {
 		Schema.addSchemaItem(table, column.getEncodedName(), column.getType().getName());
 	}	
 	
+	/**
+	 * Ensure indexed column.
+	 *
+	 * @param kind the kind
+	 * @param column the column
+	 */
 	public static void ensureIndexedColumn(String kind, DataStoreColumn column) {
 		String columnFamily = SchemaMapper.kindToColumnFamily(kind);
 		Schema.ensureColumn(columnFamily, column);
 		Schema.ensureIndex(columnFamily, column);		
 	}
 
+	/**
+	 * Ensure.
+	 *
+	 * @param row the row
+	 */
 	public static void ensure(DataStoreRow row) {
 		String columnFamily = SchemaMapper.kindToColumnFamily(row.getKind());
 		Schema.ensureModelTable(columnFamily);
@@ -258,6 +325,11 @@ public abstract class Schema {
 		}
 	}
 
+	/**
+	 * Ensure.
+	 *
+	 * @param query the query
+	 */
 	public static void ensure(Query query) {
 		String columnFamily = SchemaMapper.kindToColumnFamily(query.getKind());
 		Schema.ensureModelTable(columnFamily);

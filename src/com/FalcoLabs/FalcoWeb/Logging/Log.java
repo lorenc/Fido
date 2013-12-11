@@ -28,28 +28,63 @@ import java.util.logging.Logger;
 
 import com.FalcoLabs.Fido.api.localization.messages;
 
+/**
+ * Logging implementation for Fido.  
+ */
 public class Log {
 	 
 	private static boolean enabled = true;
 	private static String LOG_TAG = Log.class.getName();
 	private static Hashtable<String, Logger> loggers = new Hashtable<String, Logger>();		
 
+	/**
+	 * 
+	 *
+	 * @param value true if logging is enabled, otherwise false.  Default value is true.
+	 */
 	public static void setEnabled(boolean value) {
 		Log.enabled = value;
 	}
 
+	/**
+	 * Log at the Verbose level
+	 *
+	 * @param tag context for the log message
+	 * @param s message to log
+	 * @param params any format parameters referenced by s
+	 */
 	public static void v(String tag, String s, Object ... params) {
 		Log.log(tag, s, Level.INFO, params);
 	}
 
+	/**
+	 * Log at the Warning level
+	 *
+	 * @param tag context for the log message
+	 * @param s message to log
+	 * @param params any format parameters referenced by s
+	 */
 	public static void w(String tag, String s, Object ... params) {
 		Log.log(tag, s, Level.WARNING, params);
 	}
 
+	/**
+	 * Log at the Error level
+	 *
+	 * @param tag context for the log message
+	 * @param s message to log
+	 * @param params any format parameters referenced by s
+	 */
 	public static void e(String tag, String s, Object ... params) {
 		Log.log(tag, s, Level.SEVERE, params);
 	}
 
+	/**
+	 * Log an Exception at the Error level
+	 *
+	 * @param tag context for the log message
+	 * @param e the exception to log.  Both the exception text and the callstack will be added to the log
+	 */
 	public static void e(String tag, Exception e) {
 		if (!Log.enabled) {
 			return;

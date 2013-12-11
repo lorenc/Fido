@@ -23,23 +23,48 @@ package com.FalcoLabs.Fido.api.datastore;
 
 import org.apache.commons.lang3.StringUtils;
 
+// Represents a simple column with a name and a single value
 public class SimpleColumn extends DataStoreColumn {
 	public static String LOG_TAG = SimpleColumn.class.getName();
 
+	/**
+	 * Instantiates a new simple column.
+	 *
+	 * @param name the name
+	 * @param type the type
+	 * @param value the value
+	 */
 	public SimpleColumn(String name, Class<?> type, Object value) {
 		this.name = name;
 		this.type = type;
 		this.value = value;
 	}
 	
+	/**
+	 * Instantiates a new simple column.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 */
 	public SimpleColumn(String name, Object value) {
 		this(name, value.getClass(), value);
 	}
 		
+	/**
+	 * Instantiates a new simple column.
+	 *
+	 * @param name the name
+	 * @param type the type
+	 */
 	public SimpleColumn(String name, Class<?> type) {
 		this(name, type, null);
 	}
 	
+	/**
+	 * Instantiates a new simple column.
+	 *
+	 * @param name the name
+	 */
 	public SimpleColumn(String name) {	
 		switch (name) {
 		case DataStore.ENTITY_PROPERTY_KEY:

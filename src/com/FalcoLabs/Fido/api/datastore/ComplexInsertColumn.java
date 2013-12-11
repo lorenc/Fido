@@ -28,8 +28,16 @@ import com.FalcoLabs.Fido.api.datastore.Query.FilterOperator;
 import com.FalcoLabs.Fido.api.datastore.exceptions.DatastoreServiceException;
 import com.FalcoLabs.Fido.api.localization.messages;
 
-public class ComplexInsertColumn extends DataStoreColumn {
+// Does an insert of complex (multivalued) column data.  For example a property that consists of an array of strings
+class ComplexInsertColumn extends DataStoreColumn {
 
+	/**
+	 * Instantiates a new complex insert column.
+	 *
+	 * @param row the row containing the data to insert
+	 * @param name the name of the property tha will contain the data
+	 * @param values the values to associate with the name
+	 */
 	public ComplexInsertColumn(DataStoreRow row, String name, List<?> values) {
 		this.name = name;
 		String subTable = null;
@@ -45,6 +53,7 @@ public class ComplexInsertColumn extends DataStoreColumn {
 			this.type = values.getClass();
 			return;
 		}
+		
 		DatastoreClient client = new DatastoreClient();
 		long order = 0;
 		for (Object o : values) {						
@@ -54,13 +63,7 @@ public class ComplexInsertColumn extends DataStoreColumn {
 				throw new DatastoreServiceException(messages.MULTIVALID_PROPS_SAME_TYPE_ERROR);				
 			}
 			if (null == subTable) {
-				subTable = ComplexInsertColumn.getSubTableName(row.getKind(), DataStoreColumn.getEncodedName(this.name, this.type));
-				List<DataStoreColumn> subTableColumns = new ArrayList<DataStoreColumn>();
-				subTableColumns.add(DataStoreColumn.create("key", String.class));				
-				subTableColumns.add(DataStoreColumn.create(name, this.type));	
-				subTableColumns.add(DataStoreColumn.create("order", Long.class)); // order has to be the last column in the key to allow restricting by the value column
-				Schema.ensureTable(SchemaMapper.kindToColumnFamily(subTable), subTableColumns);
-				this.deleteExisting(subTable, row.getKey());
+				subTable = this.deleteExisting(row);
 			}
 			DataStoreRow subRow = new DataStoreRow(subTable);
 			subRow.addColumn(DataStoreColumn.create(name, o));
@@ -70,25 +73,39 @@ public class ComplexInsertColumn extends DataStoreColumn {
 		}						
 		this.value = String.format("%s,%s", subTable, row.getKey());	
 	}
-	
-	private void deleteExisting(String subTable, Key key) {
+
+	private String deleteExisting(DataStoreRow row) {
+		String subTable = ComplexInsertColumn.getSubTableName(row.getKind(), DataStoreColumn.getEncodedName(this.name, this.type));
+		List<DataStoreColumn> subTableColumns = new ArrayList<DataStoreColumn>();
+		subTableColumns.add(DataStoreColumn.create("key", String.class));				
+		subTableColumns.add(DataStoreColumn.create(name, this.type));	
+		subTableColumns.add(DataStoreColumn.create("order", Long.class)); // order has to be the last column in the key to allow restricting by the value column
+		Schema.ensureTable(SchemaMapper.kindToColumnFamily(subTable), subTableColumns);
+		
 		DatastoreClient client = new DatastoreClient();
 		Query q = new Query(subTable);
-		q.addFilter("key", FilterOperator.EQUAL, key);
+		q.addFilter("key", FilterOperator.EQUAL, row.getKey());
 		client.delete(q);
+		return subTable;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.FalcoLabs.Fido.api.datastore.DataStoreColumn#getEncodedName()
+	 */
 	@Override
 	public String getEncodedName() {
 		return  this.isSearchableType(this.type) ? DataStoreColumn.getComplexNameFromSimpleName(super.getEncodedName()) : super.getEncodedName();
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.FalcoLabs.Fido.api.datastore.DataStoreColumn#getType()
+	 */
 	@Override
 	public Class<?> getType() {
 		return this.isSearchableType(this.type) ? String.class : this.type; // Column type is always string as we store a string pointer to the actual column family that has the typed value
 	}
 
-	public static String getSubTableName(String kind, String encodedName) {
+	protected static String getSubTableName(String kind, String encodedName) {
 		if (kind == null) {
 			throw new DatastoreServiceException(messages.KIND_REQUIRED_FOR_MULTIVALUED_PROP_ERROR);
 		}

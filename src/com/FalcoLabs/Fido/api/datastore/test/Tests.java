@@ -42,8 +42,6 @@ import com.FalcoLabs.Fido.api.datastore.Entity;
 import com.FalcoLabs.Fido.api.datastore.FetchOptions;
 import com.FalcoLabs.Fido.api.datastore.Key;
 import com.FalcoLabs.Fido.api.datastore.Query;
-import com.FalcoLabs.Fido.api.datastore.Schema;
-import com.FalcoLabs.Fido.api.datastore.SchemaMapper;
 import com.FalcoLabs.Fido.api.datastore.Query.FilterOperator;
 import com.FalcoLabs.Fido.api.datastore.exceptions.EntityNotFoundException;
 import com.FalcoLabs.Fido.api.localization.messages;

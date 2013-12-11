@@ -23,6 +23,7 @@ package com.FalcoLabs.Fido.api.datastore;
 
 import java.io.Serializable;
 
+// Represents a class object that has been stored as a property on an entity
 public class EmbeddedEntity extends Entity  implements Serializable {
 
 	/**
@@ -30,14 +31,28 @@ public class EmbeddedEntity extends Entity  implements Serializable {
 	 */
 	private static final long serialVersionUID = -7181998054463811332L;
 
+	/**
+	 * Instantiates a new embedded entity.
+	 *
+	 * @param parent the parent
+	 * @param k the k
+	 */
 	public EmbeddedEntity(Key parent, Key k) {
 		super(parent, k);
 	}
 
+	/**
+	 * Instantiates a new embedded entity.
+	 *
+	 * @param k the k
+	 */
 	public EmbeddedEntity(Key k) {
 		super(k);
 	}
 	
+	/**
+	 * Instantiates a new embedded entity.
+	 */
 	public EmbeddedEntity() {
 		super(null);
 	}

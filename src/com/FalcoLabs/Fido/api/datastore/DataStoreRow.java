@@ -31,15 +31,26 @@ import com.datastax.driver.core.ColumnDefinitions.Definition;
 import com.datastax.driver.core.DataType;
 import com.datastax.driver.core.Row;
 
+// Represents an object in the Cassandra store
 public class DataStoreRow {
 	private static String LOG_TAG = DataStoreRow.class.getName();
 	private String kind;
 	private Map<String, DataStoreColumn> columns = new HashMap<String, DataStoreColumn>();
 	
+	/**
+	 * Instantiates a new data store row of the specified kind.
+	 *
+	 * @param kind the kind
+	 */
 	public DataStoreRow(String kind) {
 		this.kind = kind;
 	}
 	
+	/**
+	 * Instantiates a new data store row from an existing entity.
+	 *
+	 * @param e the e
+	 */
 	public DataStoreRow(Entity e) {
 		this.kind = e.getKey().getKind();
 		Key k = e.getKey();		
@@ -56,6 +67,11 @@ public class DataStoreRow {
 		}
 	}
 	
+	/**
+	 * Instantiates a new data store row from a row {@link http://www.datastax.com/doc-source/developer/java-apidocs/com/datastax/driver/core/class-use/Row.html}.
+	 *
+	 * @param row the row
+	 */
 	public DataStoreRow(Row row) {
 		for (Definition column : row.getColumnDefinitions()) {
 			DataStoreColumn c = DataStoreColumn.create(column.getName());
@@ -66,6 +82,11 @@ public class DataStoreRow {
 		}
 	}
 	
+	/**
+	 * Gets the entity.  Returns an entity created from the row
+	 *
+	 * @return the entity
+	 */
 	public Entity getEntity() {
 		Entity e = new Entity(this.getKey());
 		for (Map.Entry<String, DataStoreColumn> entry : this.getColumns().entrySet()) {
@@ -81,26 +102,57 @@ public class DataStoreRow {
 		return e;
 	}
 	
+	/**
+	 * Gets the kind.
+	 *
+	 * @return the kind
+	 */
 	public String getKind() {
 		return this.kind;
 	}
 	
+	/**
+	 * Gets the column family.
+	 *
+	 * @return the column family
+	 */
 	public String getColumnFamily() {
 		return SchemaMapper.kindToColumnFamily(this.getKind());
 	}
 	
+	/**
+	 * Gets the key.
+	 *
+	 * @return the key
+	 */
 	public Key getKey() {
 		return (Key)(null != this.getColumn("key") ? this.getColumn("key").getValue() : null);
 	}
 	
+	/**
+	 * Gets the columns.
+	 *
+	 * @return the columns
+	 */
 	public Map<String, DataStoreColumn> getColumns() {
 		return this.columns;
 	}
 	
+	/**
+	 * Gets the column.
+	 *
+	 * @param name the name
+	 * @return the column
+	 */
 	public DataStoreColumn getColumn(String name) {
 		return this.columns.get(name);
 	}
 	
+	/**
+	 * Adds the column.
+	 *
+	 * @param value the value
+	 */
 	public void addColumn(DataStoreColumn value) {
 		this.columns.put(value.getName(), value);
 	}

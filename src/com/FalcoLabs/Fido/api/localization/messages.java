@@ -24,6 +24,7 @@ package com.FalcoLabs.Fido.api.localization;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+// Constants for localizing error messages
 public class messages {
 	public static final String KEYSPACE_LENGTH_ERROR = "KEYSPACE_LENGTH_ERROR";
 	public static final String MUST_SET_KEYSPACE_ERROR = "MUST_SET_KEYSPACE_ERROR";
@@ -36,6 +37,12 @@ public class messages {
 	public static final String INVALID_KEY_NAME_ERROR = "INVALID_KEY_NAME_ERROR";
 	public static final String NO_COLUMN_FOUND_FOR_TYPE_ERROR = "NO_COLUMN_FOUND_FOR_TYPE_ERROR";
 	
+	/**
+	 * Gets the localized message for the specified key.
+	 *
+	 * @param key the key
+	 * @return the string
+	 */
 	public static String get(String key) {
 		ResourceBundle messages = ResourceBundle.getBundle("messages", Locale.getDefault());
 		String value = messages.getString(key);

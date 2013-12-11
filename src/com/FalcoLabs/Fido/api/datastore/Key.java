@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 
 import com.FalcoLabs.Fido.api.localization.messages;
 
+// Represents an item in the datastore.  Each item in the datastore has a unique key.  Key's can optionally have parents.
 public class Key implements Serializable {
 	
 	/**
@@ -39,16 +40,30 @@ public class Key implements Serializable {
 	private String kind;
 	private String name;
 	
+	/**
+	 * Empty value.
+	 *
+	 * @return the key
+	 */
 	public static Key EmptyValue() {
 		return new Key();
 	}
 	
+	/**
+	 * Instantiates a new key.
+	 */
 	protected Key() {
 		this.parent = null;
 		this.name = "";
 		this.kind = "";
 	}
 	
+	/**
+	 * Parses a key and returns the parsed instance.
+	 *
+	 * @param s the s
+	 * @return the key
+	 */
 	public static Key parse(String s) {
 		if (null == s || 0 == s.length()) {
 			return Key.EmptyValue();
@@ -76,6 +91,11 @@ public class Key implements Serializable {
 		return lastKey;
 	}
 	
+	/**
+	 * Instantiates a new key.
+	 *
+	 * @param s the s
+	 */
 	public Key(String s) {
 		int beginIndex = 0;
 		if (s.startsWith("/")) {
@@ -90,36 +110,77 @@ public class Key implements Serializable {
 		this.name = this.unescape(s.substring(split, s.length() - 2));
 	}
 	
+	/**
+	 * Instantiates a new key.
+	 *
+	 * @param parent the parent
+	 * @param kind the kind
+	 * @param name the name
+	 */
 	public Key(Key parent, String kind, String name) {
 		this.parent = parent;
 		this.kind = kind;
 		this.name = name;
 	}
 
+	/**
+	 * Instantiates a new key.
+	 *
+	 * @param kind the kind
+	 * @param name the name
+	 */
 	public Key(String kind, String name) {
 		this(null, kind, name);
 	}
 
+	/**
+	 * Gets the kind.
+	 *
+	 * @return the kind
+	 */
 	public String getKind() {
 		return this.kind;
 	}
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	public String getName() {
 		return this.name;
 	}
 
+	/**
+	 * Gets the parent.
+	 *
+	 * @return the parent
+	 */
 	public Key getParent() {
 		return this.parent;
 	}
 
+	/**
+	 * Sets the parent.
+	 *
+	 * @param value the new parent
+	 */
 	public void setParent(Key value) {
 		this.parent = value;
 	}
 	
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public long getId() {
 		return this.toString().hashCode();
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		if (this.name == null || this.name.length() == 0) {
 			return "";
@@ -137,6 +198,9 @@ public class Key implements Serializable {
 		return b.toString();
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Key)) {
@@ -154,6 +218,9 @@ public class Key implements Serializable {
 		}		
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		return this.toString().hashCode();

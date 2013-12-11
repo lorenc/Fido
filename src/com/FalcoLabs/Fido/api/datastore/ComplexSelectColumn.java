@@ -33,18 +33,33 @@ import com.FalcoLabs.Fido.api.datastore.Query.SortDirection;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 
-public class ComplexSelectColumn extends DataStoreColumn {
+// Retrieves data for a complex (multivalued) column value
+class ComplexSelectColumn extends DataStoreColumn {
 
+	/**
+	 * Instantiates a new complex select column.
+	 *
+	 * @param name the name
+	 */
 	public ComplexSelectColumn(String name) {
 		this.name = DataStoreColumn.getSimpleNameFromComplexName(name); 
 		this.type = String.class; // start out as string to read the pointer to the sub table
 	}
 	
+	/**
+	 * Instantiates a new complex select column.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 */
 	public ComplexSelectColumn(String name, String value) {
 		this(name);
 		this.setValue(value);
 	}	
 	
+	/* (non-Javadoc)
+	 * @see com.FalcoLabs.Fido.api.datastore.DataStoreColumn#setValue(java.lang.Object)
+	 */
 	@Override
 	public void setValue(Object value) {
 		if (value == null) {

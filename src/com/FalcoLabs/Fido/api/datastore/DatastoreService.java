@@ -33,24 +33,46 @@ import com.FalcoLabs.Fido.api.datastore.exceptions.EntityNotFoundException;
 import com.FalcoLabs.Fido.api.localization.messages;
 import com.datastax.driver.core.exceptions.InvalidTypeException;
 
+// Service object which handles all client instances
 public class DatastoreService {
 	private static String LOG_TAG = DatastoreService.class.getName();
 	private Query preparedQuery;
 	private DatastoreClient client;	
 	
+	/**
+	 * Instantiates a new datastore service.
+	 *
+	 * @param client the client
+	 */
 	public DatastoreService(DatastoreClient client) {
 		this.client = client;
 	}
 	
+	/**
+	 * Gets the client.
+	 *
+	 * @return the client
+	 */
 	public DatastoreClient getClient() {
 		return this.client;
 	}
 	
+	/**
+	 * Prepare the service instance with the specified query.  This query can now be used in subsequent calls against this instance.
+	 *
+	 * @param q the q
+	 * @return the datastore service
+	 */
 	public DatastoreService prepare(Query q) {
 		this.preparedQuery = q;
 		return this;
 	}
 
+	/**
+	 * Use the query set via a previous call to prepare to return a single Entity
+	 *
+	 * @return the entity
+	 */
 	public Entity asSingleEntity() {
 		if (null == this.preparedQuery) {
 			throw new DatastoreServiceException(messages.NO_QUERY_SET_ERROR);
@@ -72,12 +94,23 @@ public class DatastoreService {
 		return null;			
 	}
 	
+	/**
+	 * Count the number of entities referenced by a previously prepared query.
+	 *
+	 * @return the int
+	 */
 	public int countEntities() {
 		List<DataStoreRow> rows = this.getClient().select(this.preparedQuery);
 		int counter = rows.size();
 		return counter;
 	}
 
+	/**
+	 * Use the query set via a previous call to prepare to return a list of all matching Entities
+	 *
+	 * @param limit the limit
+	 * @return the list
+	 */
 	public List<Entity> asList(FetchOptions limit) {
 		List<Entity> entities = new ArrayList<Entity>();
 		try {
@@ -95,11 +128,22 @@ public class DatastoreService {
 		return entities;
 	}
 
+	/**
+	 * Put an object into the Datastore.
+	 *
+	 * @param e the e
+	 */
 	public void put(Entity e) {
 		DataStoreRow r = new DataStoreRow(e);
 		this.getClient().insert(r);
 	}
 	
+	/**
+	 * Get the objects referenced by the keys from the datastore.
+	 *
+	 * @param keys the keys
+	 * @return the map
+	 */
 	public Map<Key, Entity> get(List<Key> keys) {			
 		String kind = null;
 		String[] stringKeys = new String[keys.size()];
@@ -138,6 +182,12 @@ public class DatastoreService {
 		return map;
 	}
 
+	/**
+	 * Gets the object referenced by the key from the store.  Throws an exception if the object couldn't be found.
+	 * @throws com.FalcoLabs.Fido.api.exeptions.EntityNotFoundException 
+	 * @param key the key
+	 * @return the entity
+	 */
 	public Entity get(Key key) {
 		Query query = new Query(key.getKind());
 		query.addFilter("key", FilterOperator.EQUAL, key.toString());
@@ -149,14 +199,29 @@ public class DatastoreService {
 		return e;
 	}
 
+	/**
+	 * Delete the object referenced by the key.
+	 *
+	 * @param k the k
+	 */
 	public void delete(Key k) {
 		this.getClient().delete(k);
 	}
 
+	/**
+	 * Delete the object referenced by the keys.
+	 *
+	 * @param keys the keys
+	 */
 	public void delete(List<Key> keys) {
 		this.getClient().delete(keys);
 	}
 	
+	/**
+	 * Put all of the entities into the datastore
+	 *
+	 * @param entities the entities
+	 */
 	public void put(List<Entity> entities) {
 		for (Entity e : entities) {
 			this.put(e);

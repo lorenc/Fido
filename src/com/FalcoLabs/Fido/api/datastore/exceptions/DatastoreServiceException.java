@@ -23,6 +23,7 @@ package com.FalcoLabs.Fido.api.datastore.exceptions;
 
 import com.FalcoLabs.Fido.api.localization.messages;
 
+// Wraps an exception returnedby the datastore
 public class DatastoreServiceException extends RuntimeException {
 
 	/**
@@ -31,15 +32,30 @@ public class DatastoreServiceException extends RuntimeException {
 	private static final long serialVersionUID = -6436169057895006675L;
 	private Exception innerException;
 	
+	/**
+	 * Instantiates a new datastore service exception.
+	 *
+	 * @param e the e
+	 */
 	public DatastoreServiceException(Exception e) {
 		super(e);
 		this.innerException = e;
 	}
 
+	/**
+	 * Instantiates a new datastore service exception and loads the localized message.
+	 *
+	 * @param s the s
+	 */
 	public DatastoreServiceException(String s) {
 		super(messages.get(s));
 	}
 	
+	/**
+	 * Gets the inner.
+	 *
+	 * @return the inner
+	 */
 	public Exception getInner() {
 		return this.innerException;
 	}

@@ -24,15 +24,29 @@ package com.FalcoLabs.Fido.api.datastore.exceptions;
 import com.FalcoLabs.Fido.api.datastore.Key;
 import com.FalcoLabs.Fido.api.localization.messages;
 
+// Exception thrown when an Entity cannot be found
 public class EntityNotFoundException extends RuntimeException {
 
+	/**
+	 * Instantiates a new entity not found exception.
+	 */
 	public EntityNotFoundException() {
 	}
 	
+	/**
+	 * Instantiates a new entity not found exception.
+	 *
+	 * @param s the s
+	 */
 	public EntityNotFoundException(String s) {
 		super(messages.get(s));
 	}
 	
+	/**
+	 * Instantiates a new entity not found exception.
+	 *
+	 * @param key the key
+	 */
 	public EntityNotFoundException(Key key) {
 		super(key.toString());
 	}

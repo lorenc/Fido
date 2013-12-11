@@ -24,14 +24,24 @@ package com.FalcoLabs.Fido.api.datastore;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 
+// Connection to a datasource
 public class Connection {
 	private static Cluster cluster;
 	// session is threadsafe
 	private static Session session;
 	
+	/**
+	 * Instantiates a new connection.
+	 */
 	public Connection() {		
 	}
 		
+	/**
+	 * Gets the session associated witht he connection.  
+	 * {@link http://www.datastax.com/drivers/java/2.0/apidocs/com/datastax/driver/core/Session.html}
+	 *
+	 * @return the session
+	 */
 	public synchronized Session getSession() {
 		if (null == Connection.session) {
 			Connection.cluster = Cluster.builder()
