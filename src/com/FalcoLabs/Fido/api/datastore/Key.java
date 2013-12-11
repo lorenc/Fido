@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.FalcoLabs.Fido.api.localization.messages;
+
 public class Key implements Serializable {
 	
 	/**
@@ -33,14 +35,14 @@ public class Key implements Serializable {
 		Pattern pattern = Pattern.compile(".*?\\(\\\".*?\\\"\\)");
 		Matcher matcher = pattern.matcher(s);
 		if (matcher == null) {
-			throw new UnsupportedOperationException("invalid key name");
+			throw new UnsupportedOperationException(messages.get(messages.INVALID_KEY_NAME_ERROR));
 		}		
 		List<Key> keys = new ArrayList<Key>();
 		while (matcher.find()) {
 			keys.add(new Key(matcher.group()));
 		}
 		if (keys.size() == 0) {
-			throw new UnsupportedOperationException("invalid key name");
+			throw new UnsupportedOperationException(messages.get(messages.INVALID_KEY_NAME_ERROR));
 		}
 		// build the chain of keys
 		Key lastKey = null;
@@ -60,7 +62,7 @@ public class Key implements Serializable {
 		}
 		int split = s.indexOf("(\"");
 		if (-1 == split) {
-			throw new UnsupportedOperationException("invalid key name");
+			throw new UnsupportedOperationException(messages.get(messages.INVALID_KEY_NAME_ERROR));
 		}
 		this.kind = this.unescape(s.substring(beginIndex, split));
 		split += 2;

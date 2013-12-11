@@ -24,6 +24,7 @@ import com.FalcoLabs.Fido.api.datastore.Query;
 import com.FalcoLabs.Fido.api.datastore.Schema;
 import com.FalcoLabs.Fido.api.datastore.SchemaMapper;
 import com.FalcoLabs.Fido.api.datastore.Query.FilterOperator;
+import com.FalcoLabs.Fido.api.localization.messages;
 
 @RunWith(JUnit4.class)
 public class Tests {
@@ -31,7 +32,7 @@ public class Tests {
 	private static Random r = new Random();
 	
 	private static String getKeyspace() {
-		return "testkeyspace" + r.nextInt(Integer.MAX_VALUE);
+		return "testkeyspace" + r.nextInt(Integer.MAX_VALUE);			
 	}
 
 	@Test

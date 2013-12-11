@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.FalcoLabs.Fido.api.datastore.exceptions.EntityNotFoundException;
+import com.FalcoLabs.Fido.api.localization.messages;
 
 public class Query {
 	private String kind;
@@ -266,7 +267,7 @@ public class Query {
 				} 
 			}
 			// failed to find the schema for the comples and non complex property - property doesn't exist
-			throw new EntityNotFoundException("No column with the correct type found for " + this.name);
+			throw new EntityNotFoundException(messages.NO_COLUMN_FOUND_FOR_TYPE_ERROR + this.name);
 		}	
 	}	
 }

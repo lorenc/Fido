@@ -1,6 +1,7 @@
 package com.FalcoLabs.Fido.api.datastore.exceptions;
 
 import com.FalcoLabs.Fido.api.datastore.Key;
+import com.FalcoLabs.Fido.api.localization.messages;
 
 public class EntityNotFoundException extends RuntimeException {
 
@@ -8,7 +9,7 @@ public class EntityNotFoundException extends RuntimeException {
 	}
 	
 	public EntityNotFoundException(String s) {
-		super(s);
+		super(messages.get(s));
 	}
 	
 	public EntityNotFoundException(Key key) {

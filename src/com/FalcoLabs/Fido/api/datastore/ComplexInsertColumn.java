@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.FalcoLabs.Fido.api.datastore.Query.FilterOperator;
 import com.FalcoLabs.Fido.api.datastore.exceptions.DatastoreServiceException;
+import com.FalcoLabs.Fido.api.localization.messages;
 
 public class ComplexInsertColumn extends DataStoreColumn {
 
@@ -29,7 +30,7 @@ public class ComplexInsertColumn extends DataStoreColumn {
 			if (null == this.type) {
 				this.type = o.getClass();
 			} else if (this.type != o.getClass()) {
-				throw new DatastoreServiceException("mutlivalued properties must all be of the same type");				
+				throw new DatastoreServiceException(messages.MULTIVALID_PROPS_SAME_TYPE_ERROR);				
 			}
 			if (null == subTable) {
 				subTable = ComplexInsertColumn.getSubTableName(row.getKind(), DataStoreColumn.getEncodedName(this.name, this.type));
@@ -68,7 +69,7 @@ public class ComplexInsertColumn extends DataStoreColumn {
 
 	public static String getSubTableName(String kind, String encodedName) {
 		if (kind == null) {
-			throw new DatastoreServiceException("kind must not be null when setting a multivalued property");
+			throw new DatastoreServiceException(messages.KIND_REQUIRED_FOR_MULTIVALUED_PROP_ERROR);
 		}
 		return String.format("%s_%s", kind, DataStoreColumn.getComplexNameFromSimpleName(encodedName));
 	}	
@@ -79,7 +80,7 @@ public class ComplexInsertColumn extends DataStoreColumn {
 			if (null == type) {
 				type = o.getClass();
 			} else if (type != o.getClass()) {
-				throw new DatastoreServiceException("mutlivalued properties must all be of the same type");				
+				throw new DatastoreServiceException(messages.MULTIVALID_PROPS_SAME_TYPE_ERROR);				
 			}		
 		}
 		return type;

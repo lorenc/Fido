@@ -1,5 +1,7 @@
 package com.FalcoLabs.Fido.api.datastore.exceptions;
 
+import com.FalcoLabs.Fido.api.localization.messages;
+
 public class DatastoreServiceException extends RuntimeException {
 
 	/**
@@ -14,7 +16,7 @@ public class DatastoreServiceException extends RuntimeException {
 	}
 
 	public DatastoreServiceException(String s) {
-		super(s);
+		super(messages.get(s));
 	}
 	
 	public Exception getInner() {

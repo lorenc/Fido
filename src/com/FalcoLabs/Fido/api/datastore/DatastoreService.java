@@ -9,6 +9,7 @@ import com.FalcoLabs.FalcoWeb.Logging.Log;
 import com.FalcoLabs.Fido.api.datastore.Query.FilterOperator;
 import com.FalcoLabs.Fido.api.datastore.exceptions.DatastoreServiceException;
 import com.FalcoLabs.Fido.api.datastore.exceptions.EntityNotFoundException;
+import com.FalcoLabs.Fido.api.localization.messages;
 import com.datastax.driver.core.exceptions.InvalidTypeException;
 
 public class DatastoreService {
@@ -31,7 +32,7 @@ public class DatastoreService {
 
 	public Entity asSingleEntity() {
 		if (null == this.preparedQuery) {
-			throw new DatastoreServiceException("no query set");
+			throw new DatastoreServiceException(messages.NO_QUERY_SET_ERROR);
 		}	
 		try {
 			List<DataStoreRow> rows = this.getClient().select(this.preparedQuery);
@@ -85,7 +86,7 @@ public class DatastoreService {
 			if (null == kind) {
 				kind = keys.get(i).getKind();
 			} else if (!kind.equals(keys.get(i).getKind())) {
-				throw new DatastoreServiceException("All keys must be of the same kind");
+				throw new DatastoreServiceException(messages.ALL_KEYS_MUST_BE_SAME_KIND_ERROR);
 			}
 			stringKeys[i] = keys.get(i).toString();
 		}

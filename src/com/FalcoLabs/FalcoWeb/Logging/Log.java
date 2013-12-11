@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.FalcoLabs.Fido.api.localization.messages;
+
 public class Log {
 	 
 	private static boolean enabled = true;
@@ -36,7 +38,7 @@ public class Log {
 			e.printStackTrace(new PrintWriter(stringWriter));		
 			Log.e(tag, e.toString() + "\r\n" + stringWriter.toString());
 		} catch(Exception e2) {
-			Log.e(LOG_TAG, "Failed to get stacktrace - " + e2.toString() + "\r\n" + e.toString());
+			Log.e(LOG_TAG, messages.get(messages.FAILED_TO_GET_STACKTRACE_ERROR) + e2.toString() + "\r\n" + e.toString());
 		}
 	}	
 	
