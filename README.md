@@ -48,7 +48,7 @@ Additional examples can be found at https://github.com/lorenc/Fido/tree/master/s
 	
 2.  Searching for an object
 
-You can search for an object by it's key or by any of the properties defined on the object.
+	You can search for an object by it's key or by any of the properties defined on the object.
 
 		Key k = new Key("test", "testSimpleStringSearch");
 		Entity e = new Entity(k);
@@ -63,36 +63,36 @@ You can search for an object by it's key or by any of the properties defined on 
 
 3.  Searching for multi-valued properties
 
-Fido adds the ability to search for multi-valued properties that are of intrinsic types.  
+	Fido adds the ability to search for multi-valued properties that are of intrinsic types.  
 
-	Key k = new Key("test", "testMultivaluedStringSearch");
-	Entity e = new Entity(k);
-	String propertyName = "searchmultistring";
-	List<String> propertyValue = new ArrayList<String>();
-	propertyValue.add("searchstring1");
-	propertyValue.add("searchstring2");
-	propertyValue.add("searchstring3");
-	e.setProperty(propertyName, propertyValue);
-	DatastoreService service = DatastoreServiceFactory.getDatastoreService();
-	service.put(e);
-	
-	Query q = new Query("test");
-	q.addFilter(propertyName, FilterOperator.EQUAL, "searchstring1");
-	service.prepare(q);
-	Entity e2 = service.asSingleEntity();
+		Key k = new Key("test", "testMultivaluedStringSearch");
+		Entity e = new Entity(k);
+		String propertyName = "searchmultistring";
+		List<String> propertyValue = new ArrayList<String>();
+		propertyValue.add("searchstring1");
+		propertyValue.add("searchstring2");
+		propertyValue.add("searchstring3");
+		e.setProperty(propertyName, propertyValue);
+		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
+		service.put(e);
+		
+		Query q = new Query("test");
+		q.addFilter(propertyName, FilterOperator.EQUAL, "searchstring1");
+		service.prepare(q);
+		Entity e2 = service.asSingleEntity();
 			
 4.  Deleting an object
 
-Objects can be deleted by using their associated key.
+	Objects can be deleted by using their associated key.
 			
-	Key k = new Key("dog", "pug");
-	Entity e = new Entity(k);
-	DatastoreService service = DatastoreServiceFactory.getDatastoreService();
-	service.put(e);
-	service.delete(k);
-	try {
-		Entity e2 = service.get(e);
-	} catch(EntityNotFoundException e) {
-	}
+		Key k = new Key("dog", "pug");
+		Entity e = new Entity(k);
+		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
+		service.put(e);
+		service.delete(k);
+		try {
+			Entity e2 = service.get(e);
+		} catch(EntityNotFoundException e) {
+		}
 
 			
