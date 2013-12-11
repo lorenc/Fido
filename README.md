@@ -28,6 +28,8 @@ Getting Started
 Examples
 -------------------------
 
+Javadoc can be found at: http://lorenc.github.io/Fido/
+
 Additional examples can be found at https://github.com/lorenc/Fido/tree/master/src/com/FalcoLabs/Fido/api/datastore/test
 
 1.  Creating, saving, and retrieving a new object
