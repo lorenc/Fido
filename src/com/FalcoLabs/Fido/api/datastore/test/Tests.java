@@ -38,6 +38,8 @@ public class Tests {
 	@Test
 	public void testKeyParentParse() {
 		try {
+			DataStore.setContactPoint("127.0.0.1");
+			DataStore.setReplicationFactor(1);
 			DataStore.setKeyspace(Tests.getKeyspace());
 			DatastoreService service = DatastoreServiceFactory.getDatastoreService();
 			

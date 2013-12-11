@@ -194,8 +194,6 @@ public abstract class Schema {
 			return "blob";
 		} else if (columnClass == Key.class) {
 			return "varchar";
-		} else if (columnClass == Text.class) {
-			return "varchar";
 		} else {
 			throw new IllegalArgumentException();
 		}			

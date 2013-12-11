@@ -169,8 +169,6 @@ public class DatastoreClient {
 		for (Object o : values) {
 			if (o instanceof Key) {
 				safeValues.add(((Key)o).toString());
-			} else if (o instanceof Text) {
-				safeValues.add(((Text)o).getValue());
 			} else if (o instanceof EmbeddedEntity) {
 				BinarySerializer<EmbeddedEntity> b = new BinarySerializer<EmbeddedEntity>();
 				safeValues.add(b.toByteBuffer((EmbeddedEntity)o));
