@@ -25,7 +25,12 @@ Getting Started
 
 	DataStore.setKeyspace("mykeyspace");
 	
-5.  Creating, saving, and retrieving a new object
+Examples
+-------------------------
+
+Additional examples can be found at https://github.com/lorenc/Fido/tree/master/src/com/FalcoLabs/Fido/api/datastore/test
+
+1.  Creating, saving, and retrieving a new object
 
 	Every object used by Fido can be identified by a Key.  A key has two parts:
 	
@@ -41,7 +46,7 @@ Getting Started
 		service.put(e);
 		Entity sheepDog = service.get(e);
 	
-6.  Searching for an object
+2.  Searching for an object
 
 		Key k = new Key("test", "testSimpleStringSearch");
 		Entity e = new Entity(k);
@@ -54,7 +59,7 @@ Getting Started
 		service.prepare(q);
 		Entity e2 = service.asSingleEntity();
 
-7.  Searching for multi-valued properties
+3.  Searching for multi-valued properties
 
 Fido adds the ability to search for multi-valued properties that are of intrinsic types.  
 
@@ -74,4 +79,15 @@ Fido adds the ability to search for multi-valued properties that are of intrinsi
 	service.prepare(q);
 	Entity e2 = service.asSingleEntity();
 			
+4.  Deleting an object
+			
+	Key k = new Key("dog", "pug");
+	Entity e = new Entity(k);
+	DatastoreService service = DatastoreServiceFactory.getDatastoreService();
+	service.put(e);
+	service.delete(k);
+	try {
+		Entity e2 = service.get(e);
+	} catch(EntityNotFoundException e) {
+	}
 			

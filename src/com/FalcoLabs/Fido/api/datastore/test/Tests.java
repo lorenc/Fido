@@ -24,6 +24,7 @@ import com.FalcoLabs.Fido.api.datastore.Query;
 import com.FalcoLabs.Fido.api.datastore.Schema;
 import com.FalcoLabs.Fido.api.datastore.SchemaMapper;
 import com.FalcoLabs.Fido.api.datastore.Query.FilterOperator;
+import com.FalcoLabs.Fido.api.datastore.exceptions.EntityNotFoundException;
 import com.FalcoLabs.Fido.api.localization.messages;
 
 @RunWith(JUnit4.class)
@@ -97,6 +98,35 @@ public class Tests {
 		}		
 	}
 	*/
+
+	@Test
+	public void testDelete() {
+		try {
+			DataStore.setKeyspace(Tests.getKeyspace());
+			DatastoreService service = DatastoreServiceFactory.getDatastoreService();
+			
+			Entity e1 = new Entity(new Key("test", "e1"));
+			service.put(e1);
+			
+			Entity e2 = service.get(new Key("test", "e1"));
+			org.junit.Assert.assertEquals(e2.getKey(), e1.getKey());
+			
+			service.delete(e2.getKey());
+			Entity e3 = null;
+			try {
+				e3 = service.get(e2.getKey());
+			} catch (EntityNotFoundException enfe) {
+				org.junit.Assert.assertNotNull(enfe);
+			}
+			org.junit.Assert.assertNull(e3);
+		} catch(Exception e) {
+			Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Failed - testDelete");
+			org.junit.Assert.fail();
+		}		
+		finally {
+			DataStore.dropKeyspace();
+		}		
+	}
 	
 	@Test
 	public void testGETSETKey() {
