@@ -44,7 +44,7 @@ Additional examples can be found at https://github.com/lorenc/Fido/tree/master/s
 		e.setProperty("color", "brown");
 		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
 		service.put(e);
-		Entity sheepDog = service.get(e);
+		Entity sheepDog = service.get(k);
 	
 2.  Searching for an object
 
