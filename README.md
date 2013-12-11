@@ -81,13 +81,14 @@ Fido adds the ability to search for multi-valued properties that are of intrinsi
 			
 4.  Deleting an object
 			
-	Key k = new Key("dog", "pug");
-	Entity e = new Entity(k);
-	DatastoreService service = DatastoreServiceFactory.getDatastoreService();
-	service.put(e);
-	service.delete(k);
-	try {
-		Entity e2 = service.get(e);
-	} catch(EntityNotFoundException e) {
-	}
+		Key k = new Key("dog", "pug");
+		Entity e = new Entity(k);
+		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
+		service.put(e);
+		service.delete(k);
+		try {
+			Entity e2 = service.get(e);
+		} catch(EntityNotFoundException e) {
+		}
+
 			
