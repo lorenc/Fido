@@ -1,0 +1,6 @@
+com.FalcoLabs.FalcoWeb.Logging
+com.FalcoLabs.Fido.api.datastore
+com.FalcoLabs.Fido.api.datastore.exceptions
+com.FalcoLabs.Fido.api.datastore.serializers
+com.FalcoLabs.Fido.api.datastore.test
+com.FalcoLabs.Fido.api.localization
