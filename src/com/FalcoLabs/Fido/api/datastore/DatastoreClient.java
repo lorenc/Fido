@@ -52,7 +52,7 @@ public class DatastoreClient {
 	/**
 	 * Query the store for matching data
 	 *
-	 * @param cql the cql {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html}
+	 * @param cql the cql @see <a href="http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html">CQL</a>
 	 * @param values the values
 	 * @return the result set containing the results of the query
 	 */
@@ -78,7 +78,7 @@ public class DatastoreClient {
 	/**
 	 * Delete.  Delete any items that match the query
 	 *
-	 * @param query the query {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html}
+	 * @param query the query @see <a href="http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html">CQL</a>
 	 */
 	public void delete(Query query) {
 		query.prepare();
@@ -96,7 +96,7 @@ public class DatastoreClient {
 	/**
 	 * Select.  Return any items that match the query
 	 *
-	 * @param query the query {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html}
+	 * @param query the query @see <a href="http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html">CQL</a>
 	 * @return the list
 	 */
 	public List<DataStoreRow> select(Query query) {
@@ -125,7 +125,7 @@ public class DatastoreClient {
 	 * Select.
 	 *
 	 * @param columns the columns to return
-	 * @param query the query {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html}
+	 * @param query the query @see <a href="http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/about_cql_c.html">CQL</a>
 	 * @return the list
 	 */
 	public List<DataStoreRow> select(List<DataStoreColumn> columns, Query query) {

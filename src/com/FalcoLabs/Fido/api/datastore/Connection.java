@@ -37,8 +37,8 @@ public class Connection {
 	}
 		
 	/**
-	 * Gets the session associated witht he connection.  
-	 * {@link http://www.datastax.com/drivers/java/2.0/apidocs/com/datastax/driver/core/Session.html}
+	 * Gets the session associated with the connection.  
+	 * @see <a href="http://www.datastax.com/drivers/java/2.0/apidocs/com/datastax/driver/core/Session.html">Cassandra Session</a>
 	 *
 	 * @return the session
 	 */

@@ -68,7 +68,7 @@ public class DataStoreRow {
 	}
 	
 	/**
-	 * Instantiates a new data store row from a row {@link http://www.datastax.com/doc-source/developer/java-apidocs/com/datastax/driver/core/class-use/Row.html}.
+	 * Instantiates a new data store row from a row @see <a href="http://www.datastax.com/doc-source/developer/java-apidocs/com/datastax/driver/core/class-use/Row.html">Row</a>
 	 *
 	 * @param row the row
 	 */

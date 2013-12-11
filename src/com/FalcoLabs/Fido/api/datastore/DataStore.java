@@ -55,8 +55,8 @@ public abstract class DataStore {
 	
 	/**
 	 * Sets the keyspace.
-	 * {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/create_keyspace_c.html}
-	 * {@linke http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_reference/create_keyspace_r.html}
+	 * @see <a href="http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_using/create_keyspace_c.html">Cassandra Keyspace</a>
+	 * @see <a href="http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_reference/create_keyspace_r.html">Create Keyspace</a>
 	 * @param keyspace the new keyspace
 	 */
 	public static void setKeyspace(String keyspace) {
@@ -69,7 +69,7 @@ public abstract class DataStore {
 	
 	/**
 	 * Drop keyspace.  After dropping a keyspace all data that was stored in that keyspace will no longer be accessible
-	 * {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_reference/drop_keyspace_r.html}
+	 * @see <a href="http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_reference/drop_keyspace_r.html">Cassandra Keyspace</a>
 	 */
 	public static void dropKeyspace() {
 		if (null == DataStore.KEYSPACE_NAME) {
@@ -83,7 +83,7 @@ public abstract class DataStore {
 
 	/**
 	 * Sets the replication factor.
-	 * {@link http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_reference/cql_storage_options_c.html}
+	 * @see <a href="http://www.datastax.com/documentation/cql/3.0/webhelp/index.html#cql/cql_reference/cql_storage_options_c.html">Cassandra Options</a>
 	 * @param value the new replication factor
 	 */
 	public static void setReplicationFactor(int value) {
