@@ -48,6 +48,8 @@ Additional examples can be found at https://github.com/lorenc/Fido/tree/master/s
 	
 2.  Searching for an object
 
+You can search for an object by it's key or by any of the properties defined on the object.
+
 		Key k = new Key("test", "testSimpleStringSearch");
 		Entity e = new Entity(k);
 		e.setProperty("search1", "value1");
