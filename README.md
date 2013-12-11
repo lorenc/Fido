@@ -80,15 +80,17 @@ Fido adds the ability to search for multi-valued properties that are of intrinsi
 	Entity e2 = service.asSingleEntity();
 			
 4.  Deleting an object
+
+Objects can be deleted by using their associated key.
 			
-		Key k = new Key("dog", "pug");
-		Entity e = new Entity(k);
-		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
-		service.put(e);
-		service.delete(k);
-		try {
-			Entity e2 = service.get(e);
-		} catch(EntityNotFoundException e) {
-		}
+	Key k = new Key("dog", "pug");
+	Entity e = new Entity(k);
+	DatastoreService service = DatastoreServiceFactory.getDatastoreService();
+	service.put(e);
+	service.delete(k);
+	try {
+		Entity e2 = service.get(e);
+	} catch(EntityNotFoundException e) {
+	}
 
 			
