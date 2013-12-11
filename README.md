@@ -34,25 +34,25 @@ Getting Started
 	
 	The Kind can be thought of as the name of the table or column family.  The Name is how the item is identified within the Kind.  Every object used by Fido has a unique Kind/Name combination. 
 	
-	Key k = new Key("dog", "sheepdog");
-	Entity e = new Entity(k);
-	e.setProperty("color", "brown");
-	DatastoreService service = DatastoreServiceFactory.getDatastoreService();
-	service.put(e);
-	Entity sheepDog = service.get(e);
+		Key k = new Key("dog", "sheepdog");
+		Entity e = new Entity(k);
+		e.setProperty("color", "brown");
+		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
+		service.put(e);
+		Entity sheepDog = service.get(e);
 	
 6.  Searching for an object
 
-	Key k = new Key("test", "testSimpleStringSearch");
-	Entity e = new Entity(k);
-	e.setProperty("search1", "value1");
-	DatastoreService service = DatastoreServiceFactory.getDatastoreService();
-	service.put(e);
-	
-	Query q = new Query("test");
-	q.addFilter("search1", FilterOperator.EQUAL, "value1");
-	service.prepare(q);
-	Entity e2 = service.asSingleEntity();
+		Key k = new Key("test", "testSimpleStringSearch");
+		Entity e = new Entity(k);
+		e.setProperty("search1", "value1");
+		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
+		service.put(e);
+		
+		Query q = new Query("test");
+		q.addFilter("search1", FilterOperator.EQUAL, "value1");
+		service.prepare(q);
+		Entity e2 = service.asSingleEntity();
 
 7.  Searching for multi-valued properties
 
