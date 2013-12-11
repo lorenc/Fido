@@ -19,7 +19,7 @@ Getting Started
 		DataStore.setContactPoint("127.0.0.1");
 		DataStore.setReplicationFactor(1);
 	 
-In this example our Cassandra database is running on the same machine as our java application.
+	In this example our Cassandra database is running on the same machine as our java application.
 
 4.  Define your keyspace.  The keyspace can be any value you want but must be 30 characters or less in length.
 
@@ -27,12 +27,12 @@ In this example our Cassandra database is running on the same machine as our jav
 	
 5.  Creating, saving, and retrieving a new object
 
-Every object used by Fido can be identified by a Key.  A key has two parts:
+	Every object used by Fido can be identified by a Key.  A key has two parts:
 	
 	1.  Kind
 	2.  Name
 	
-The Kind can be thought of as the name of the table or column family.  The Name is how the item is identified within the Kind.  Every object used by Fido has a unique Kind/Name combination. 
+	The Kind can be thought of as the name of the table or column family.  The Name is how the item is identified within the Kind.  Every object used by Fido has a unique Kind/Name combination. 
 	
 	Key k = new Key("dog", "sheepdog");
 	Entity e = new Entity(k);
