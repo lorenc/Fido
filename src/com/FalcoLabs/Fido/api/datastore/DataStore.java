@@ -31,6 +31,7 @@ public abstract class DataStore {
 	protected static final String ENTITY_PROPERTY_PARENT = "parent";
 	protected static String CONNECTION_POOL_NAME;
 	protected static String CONNECTION_STRING;
+	protected static int CONNECTION_PORT = -1;
 	protected static int REPLICATION_FACTOR = 1;
 	protected static String KEYSPACE_NAME;
 	private static final int MAX_KEYSPACE_LENGTH = 30;	
@@ -51,6 +52,15 @@ public abstract class DataStore {
 	 */
 	public static void setContactPoint(String value) {
 		DataStore.CONNECTION_STRING = value;
+	}
+	
+	/**
+	 * Sets the port used to connect
+	 *
+	 * @param value the new port.  This should be the port that Cassandra is listening on
+	 */	
+	public static void setPort(int value) {
+		DataStore.CONNECTION_PORT = value;
 	}
 	
 	/**

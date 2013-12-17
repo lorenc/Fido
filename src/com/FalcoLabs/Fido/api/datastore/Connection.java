@@ -44,9 +44,14 @@ public class Connection {
 	 */
 	public synchronized Session getSession() {
 		if (null == Connection.session) {
-			Connection.cluster = Cluster.builder()
-					//.withPort(DataStore.CONNECTION_PORT)
-					.addContactPoint(DataStore.CONNECTION_STRING).build();
+			if (-1 == DataStore.CONNECTION_PORT) {
+				Connection.cluster = Cluster.builder()
+						.addContactPoint(DataStore.CONNECTION_STRING).build();
+			} else {
+				Connection.cluster = Cluster.builder()
+						.withPort(DataStore.CONNECTION_PORT)
+						.addContactPoint(DataStore.CONNECTION_STRING).build();				
+			}
 			Connection.session = cluster.connect();			
 		}
 		return Connection.session;
