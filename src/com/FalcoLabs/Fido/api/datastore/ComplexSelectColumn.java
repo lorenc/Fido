@@ -25,13 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cassandra.db.Column;
 import org.apache.commons.lang3.StringUtils;
 
 import com.FalcoLabs.Fido.api.datastore.Query.FilterOperator;
 import com.FalcoLabs.Fido.api.datastore.Query.SortDirection;
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
 
 // Retrieves data for a complex (multivalued) column value
 class ComplexSelectColumn extends DataStoreColumn {

@@ -29,12 +29,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.Test;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import com.FalcoLabs.Fido.api.datastore.DataStore;
-import com.FalcoLabs.Fido.api.datastore.DataStoreColumn;
 import com.FalcoLabs.Fido.api.datastore.DatastoreService;
 import com.FalcoLabs.Fido.api.datastore.DatastoreServiceFactory;
 import com.FalcoLabs.Fido.api.datastore.EmbeddedEntity;
@@ -44,7 +42,6 @@ import com.FalcoLabs.Fido.api.datastore.Key;
 import com.FalcoLabs.Fido.api.datastore.Query;
 import com.FalcoLabs.Fido.api.datastore.Query.FilterOperator;
 import com.FalcoLabs.Fido.api.datastore.exceptions.EntityNotFoundException;
-import com.FalcoLabs.Fido.api.localization.messages;
 
 @RunWith(JUnit4.class)
 public class Tests {
@@ -61,17 +58,15 @@ public class Tests {
 			DataStore.setContactPoint("127.0.0.1");
 			DataStore.setReplicationFactor(1);
 			DataStore.setKeyspace(Tests.getKeyspace());
-			DatastoreService service = DatastoreServiceFactory.getDatastoreService();
 			
 			Key k = Key.parse("com.FalcoLabs.FalcoWeb.DataObjects.Model.User(\"com.FalcoLabs.FalcoWeb.DataObjects.Model.User\")/com.FalcoLabs.FalcoWeb.DataObjects.Model.User(\"/users/74b905ce-4bde-4cda-b6a8-eb5745513d3d\")/com.FalcoWeb.doggiefan.DataObjects.Model.UserAnswerSet(\"com.FalcoWeb.doggiefan.Games.Rater.Rater-What breed is the most active?-/users/74b905ce-4bde-4cda-b6a8-eb5745513d3d\")");
 			org.junit.Assert.assertNotNull(k);
 			org.junit.Assert.assertNotNull(k.getParent());
 			org.junit.Assert.assertNotNull(k.getParent().getParent());
-		} catch(Exception e) {
+		} catch(Throwable e) {
 			Logger.getLogger(LOG_TAG).log(Level.SEVERE, "Failed - testKeyParentParse");
 			org.junit.Assert.fail();
-		}		
-		finally {
+		} finally {
 			DataStore.dropKeyspace();
 		}		
 	}
@@ -170,6 +165,7 @@ public class Tests {
 		}		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testGETSETListKeys() {
 		try {
@@ -223,6 +219,7 @@ public class Tests {
 		}		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testMultiValuedIntPropOrder() {
 		try {
@@ -293,6 +290,7 @@ public class Tests {
 		}		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testSetNonSearchableComplexProp() {
 		try {
@@ -474,6 +472,7 @@ public class Tests {
 		}		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testMultiMultivaluedProperty() {
 		try {
@@ -510,6 +509,7 @@ public class Tests {
 		}		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testMultivaluedIntProperty() {
 		try {

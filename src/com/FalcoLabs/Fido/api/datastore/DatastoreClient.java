@@ -21,7 +21,6 @@
 
 package com.FalcoLabs.Fido.api.datastore;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

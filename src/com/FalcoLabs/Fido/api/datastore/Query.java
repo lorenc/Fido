@@ -332,7 +332,7 @@ public class Query {
 				b.append("(");
 				List<?> values = (List<?>)this.value;
 				int count = 0;
-				for (Object o : values) {
+				for (@SuppressWarnings("unused") Object o : values) {
 					if (count++ > 0) {
 						b.append(',');
 					}
