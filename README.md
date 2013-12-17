@@ -24,6 +24,7 @@ Getting Started
 	- metrics-core-2.2.0.jar from http://mvnrepository.com/artifact/com.yammer.metrics/metrics-core/2.0.0-BETA19
 	- netty-3.8.0.Final.jar from http://netty.io/downloads.html
 	- snappy-java-1.1.1.jar from https://code.google.com/p/snappy-java/
+	- commons-lang3-3.1.jar from http://commons.apache.org/proper/commons-lang/download_lang.cgi
 	- Java 1.7 libraries
 
 4.  In your project tell Fido how to connect to the Cassandra database:
@@ -106,8 +107,8 @@ Additional examples can be found at https://github.com/lorenc/Fido/tree/master/s
 		service.put(e);
 		service.delete(k);
 		try {
-			Entity e2 = service.get(e);
-		} catch(EntityNotFoundException e) {
+			Entity e2 = service.get(e.getKey());
+		} catch(EntityNotFoundException enfe) {
 		}
 
 		
