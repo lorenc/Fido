@@ -10,18 +10,31 @@ Fid is designed to be as thin as possible so that it doesn't impose any performa
 Getting Started
 -------------------------
 
-1.  Install Cassandra by following the instructions at http://wiki.apache.org/cassandra/GettingStarted
+1.  Install Cassandra by following the instructions at http://wiki.apache.org/cassandra/GettingStarted.  Fido requires Cassandra version 2.0.0 or later.
 
-2.  Build or Download the Fido libraries and include them in your project
+2.  Build or Download the Fido libraries and include them in your project.  You can download v1 of the Fido library from https://github.com/lorenc/Fido/releases.  If building your own binaries Fido is built using maven.  
 
-3.  In your project tell Fido how to connect to the Cassandra database:
+3.  You will also need to include a few support libraries including:
+	- datastax java driver at https://github.com/datastax/java-driver 
+	- slf4j-api-1.7.5.jar from http://www.slf4j.org/download.html
+	- cassandra-all-[version].jar from your cassandra installation
+	- guava-15.0.jar from https://code.google.com/p/guava-libraries/wiki/Release15
+	- jackson-all-1.8.2.jar from http://jackson.codehaus.org/
+	- libthrift-0.7.0.jar from http://repo1.maven.org/maven2/org/apache/thrift/libthrift/
+	- metrics-core-2.2.0.jar from http://mvnrepository.com/artifact/com.yammer.metrics/metrics-core/2.0.0-BETA19
+	- netty-3.8.0.Final.jar from http://netty.io/downloads.html
+	- snappy-java-1.1.1.jar from https://code.google.com/p/snappy-java/
+	- Java 1.7 libraries
+
+4.  In your project tell Fido how to connect to the Cassandra database:
 		
 		DataStore.setContactPoint("127.0.0.1");
+		DataStore.setPort(9042);
 		DataStore.setReplicationFactor(1);
 	 
-	In this example our Cassandra database is running on the same machine as our java application.
+	In this example our Cassandra database is running on the same machine as our java application using the default port.
 
-4.  Define your keyspace.  The keyspace can be any value you want but must be 30 characters or less in length.
+5.  Define your keyspace.  The keyspace can be any value you want but must be 30 characters or less in length.
 
 	DataStore.setKeyspace("mykeyspace");
 	
@@ -97,4 +110,14 @@ Additional examples can be found at https://github.com/lorenc/Fido/tree/master/s
 		} catch(EntityNotFoundException e) {
 		}
 
-			
+		
+License
+-------
+
+Copyright 2013, Falco Labs LLC.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.			
