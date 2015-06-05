@@ -115,7 +115,7 @@ Additional examples can be found at https://github.com/lorenc/Fido/tree/master/s
 License
 -------
 
-Copyright 2014, Falco Labs LLC.
+Copyright 2015, Falco Labs LLC.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
